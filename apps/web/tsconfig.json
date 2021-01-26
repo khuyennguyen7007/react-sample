@@ -4,7 +4,13 @@
     "jsx": "react",
     "allowJs": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "..",
+    "paths": {
+      "@web/*": ["web/src/app/*"],
+      "@env/*": ["web/src/environment/*"]
+    },
+    "rootDir": "."
   },
   "files": [],
   "include": [],
