@@ -1,25 +1,9 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
-
-const counterSlice = createSlice({
-  name: 'counter',
-  initialState: {
-    value: 0,
-  },
-  reducers: {
-    incremented: (state) => {
-      state.value += 1;
-    },
-    decremented: (state) => {
-      state.value -= 1;
-    },
-  },
-});
-
-export const { incremented, decremented } = counterSlice.actions;
+import { rootReducer } from './reducers';
 
 export const store = configureStore({
-  reducer: counterSlice.reducer,
+  reducer: rootReducer,
   middleware: [thunkMiddleware],
 });
 

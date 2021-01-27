@@ -28,9 +28,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/data-grid": "^4.0.0-alpha.18",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@reduxjs/toolkit": "^1.5.0",
     "axios": "^0.21.1",
+    "axios-hooks": "^2.3.0",
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
     "i18next": "^19.8.4",

@@ -5,6 +5,9 @@ export const useLocale = () => {
   i18n
     .use(initReactI18next)
     .init({
+      react: {
+        useSuspense: false
+      },
       resources: {
         en: {
           translation: {

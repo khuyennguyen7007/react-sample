@@ -3,6 +3,8 @@ import { store } from '@web/store';
 import { LOGIN_PAGE, UPLOAD_PAGE, USER_PAGE } from '@web/config/routes';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { theme } from '@web/config/theme';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 const LoginPage = lazy(() => import('@web/modules/login/pages/LoginPage').then(({LoginPage}) => ({default: LoginPage})));
 const UserPage = lazy(() => import('@web/modules/users/pages/UserPage').then(({UserPage}) => ({default: UserPage})));
@@ -14,19 +16,21 @@ export const Container = () => {
   return (
     <Router>
       <Provider store={store}>
-        <Header/>
-        <Switch>
-          <PrivateRoute path={UPLOAD_PAGE} exact>
-            <UploadPage/>
-          </PrivateRoute>
-          <PrivateRoute path={USER_PAGE}>
-            <UserPage/>
-          </PrivateRoute>
-          <Route path={LOGIN_PAGE}>
-            <LoginPage/>
-          </Route>
-        </Switch>
+        <ThemeProvider theme={theme}>
+          <Header />
+          <Switch>
+            <PrivateRoute path={UPLOAD_PAGE} exact>
+              <UploadPage />
+            </PrivateRoute>
+            <Route path={USER_PAGE}>
+              <UserPage />
+            </Route>
+            <Route path={LOGIN_PAGE}>
+              <LoginPage />
+            </Route>
+          </Switch>
+        </ThemeProvider>
       </Provider>
     </Router>
-  )
+  );
 }
