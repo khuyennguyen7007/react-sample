@@ -6,11 +6,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "..",
+    "rootDir": ".",
     "paths": {
-      "@web/*": ["web/src/app/*"],
-      "@env/*": ["web/src/environment/*"]
-    },
-    "rootDir": "."
+      "@web/*": ["./web/src/app/*"],
+      "@env/*": ["./web/src/environments/*"]
+    }
   },
   "files": [],
   "include": [],

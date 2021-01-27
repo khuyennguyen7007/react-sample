@@ -1,4 +1,3 @@
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
@@ -6,26 +5,29 @@ import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 export const LoginPage = () => {
+  const {t} = useTranslation();
   const {
     register,
     handleSubmit,
     errors,
-    formState: { isValid, isSubmitting },
-  } = useForm({ mode: 'onChange' });
+    formState: {isValid, isSubmitting},
+  } = useForm({mode: 'onChange'});
   const [loading, setLoading] = useState(false); // initialize the hook
   const onSubmit = async (data) => {
     setLoading(true);
     console.log(data);
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     await sleep(3000);
-     setLoading(false);
+    setLoading(false);
   };
 
   return (
     <>
-      <Alert severity="error">This is an error alert — check it out!</Alert>
+      <Alert severity="error">{t('Welcome to React')}</Alert>
+      <p>{t('key', { what: 'Money', how: 'great' })}</p>
       <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
         <FormGroup>
           <TextField
@@ -33,7 +35,7 @@ export const LoginPage = () => {
             name="username"
             label="Username"
             required
-            inputRef={register({ required: true })}
+            inputRef={register({required: true})}
           />
         </FormGroup>
         <FormGroup>
@@ -44,7 +46,7 @@ export const LoginPage = () => {
             label="Password"
             type="password"
             required
-            inputRef={register({ minLength: 8, required: true })}
+            inputRef={register({minLength: 8, required: true})}
           />
         </FormGroup>
         <Button
@@ -54,7 +56,7 @@ export const LoginPage = () => {
           onClick={handleSubmit(onSubmit)}
         >
           Primary
-          {loading && <CircularProgress size={20} color="secondary" />}
+          {loading && <CircularProgress size={20} color="secondary"/>}
         </Button>
       </form>
     </>

@@ -1,50 +1,36 @@
-import axios, { AxiosError, AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios';
-import { requestBaseInterceptors } from '../interceptors/request-base.interceptor';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { environment } from '@env/environment';
 
 let httpInstance: AxiosInstance;
 
 export function getHttpInstance(): AxiosInstance {
-    if (!httpInstance) {
-        httpInstance = axios.create();
-        httpInstance.interceptors.request.use(requestBaseInterceptors)
-    }
-    
-    return httpInstance;
-}
-
-function handleHttpError(error: AxiosError): string {
-  const genericErrorMessage = 'Something Failed. Try again?';
-
-  if (error.response && error.response.data) {
-    return error.response.data.errorMessage || genericErrorMessage;
+  if (!httpInstance) {
+    httpInstance = axios.create();
+    httpInstance.interceptors.request.use(function (config): AxiosRequestConfig {
+      config.baseURL = environment.baseApiURL;
+      return config;
+    });
   }
 
-  return genericErrorMessage;
+  return httpInstance;
 }
 
-function makeHttpRequest(apiCall: Function) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const data: AxiosResponse = await apiCall();
-      resolve(data.data);
-    } catch (e) {
-      reject(handleHttpError(e));
-    }
-  });
+export function getRequest(url: string, config: AxiosRequestConfig = {}) {
+  return getHttpInstance().get(url, config);
 }
 
-export function getRequest(path: string, options?: AxiosRequestConfig) {
-  return makeHttpRequest(() => axios.get(path, options));
+export function postRequest(url: string, config: AxiosRequestConfig = {}) {
+  return getHttpInstance().post(url, config);
 }
 
-export function postRequest(path: string, options?: AxiosRequestConfig) {
-  return makeHttpRequest(() => axios.post(path, options));
+export function putRequest(url: string, config: AxiosRequestConfig = {}) {
+  return getHttpInstance().put(url, config);
 }
 
-export function putRequest(path: string, options?: AxiosRequestConfig) {
-  return makeHttpRequest(() => axios.put(path, options));
+export function patchRequest(url: string, config: AxiosRequestConfig = {}) {
+  return getHttpInstance().patch(url, config);
 }
 
-export function deleteRequest(path: string, options?: AxiosRequestConfig) {
-  return makeHttpRequest(() => axios.delete(path, options));
+export function deleteRequest(url: string, config: AxiosRequestConfig = {}) {
+  return getHttpInstance().delete(url, config);
 }

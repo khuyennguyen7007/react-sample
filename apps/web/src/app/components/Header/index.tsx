@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './styles.module.scss';
+import React, { lazy } from 'react';
 
-export const Container = ({ children }) => (
-  <div className={styles.container}>{children}</div>
+const Navigation = lazy(() => import('@web/components/Navigation').then(({Navigation}) => ({default: Navigation})));
+export const Header = () => (
+  <Navigation/>
 );

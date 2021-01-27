@@ -1,46 +1,31 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-} from 'react-router-dom';
-import { HOME_PAGE, LOGIN_PAGE, USER_PAGE } from './config/routes';
-import { HomePage } from '@web/modules/home/pages/HomePage';
-import { UserPage } from '@web/modules/users/pages/UserPage';
-import { store } from '@web/store';
-import { LoginPage } from '@web/modules/login/pages/LoginPage';
+import React, { lazy, useEffect, useState } from 'react';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { useLocale } from '@web/services/i18n/hooks/use-locale';
+
+const Container = lazy(() => import('@web/components/Container').then(({Container}) => ({ default: Container})));
 
 export default function App() {
+  useLocale();
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    async function initialize() {
+      await new Promise(resolve => {
+        setTimeout(() => resolve(), 1000);
+      })
+      const el = document.querySelector('.loader-container');
+      if (el) {
+        el.remove();
+      }
+      setLoading(false);
+    }
+    initialize();
+  }, []);
+
   return (
-    <Router>
-      <Provider store={store}>
-        <div>
-          <ul>
-            <li>
-              <Link to={HOME_PAGE}>Home</Link>
-            </li>
-            <li>
-              <Link to={HOME_PAGE}>Home</Link>
-            </li>
-            <li>
-              <Link to={LOGIN_PAGE}>Login</Link>
-            </li>
-          </ul>
-        </div>
-        <Switch>
-          <Route path={HOME_PAGE} exact>
-            <HomePage />
-          </Route>
-          <Route path={USER_PAGE}>
-            <UserPage />
-          </Route>
-          <Route path={LOGIN_PAGE}>
-            <LoginPage />
-          </Route>
-        </Switch>
-      </Provider>
-    </Router>
+    <React.Fragment>
+      <CssBaseline/>
+      {isLoading ? null : <Container/>}
+    </React.Fragment>
   );
 }

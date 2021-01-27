@@ -1,6 +1,6 @@
 const PROXY_CONFIG = {
     '/api': {
-        'target': 'http://localhost:3333/api',
+        'target': process.env.WEB_API_URL || 'https://localhost:44343/api',
         'secure': false
     }
 };
